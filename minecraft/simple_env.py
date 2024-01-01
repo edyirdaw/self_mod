@@ -12,6 +12,37 @@ else:
     import functools
     print = functools.partial(print, flush=True)
 
+missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+            <Mission xmlns="http://ProjectMalmo.microsoft.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+
+              <About>
+                <Summary>Simple Env</Summary>
+              </About>
+
+              <ServerSection>
+               <ServerInitialConditions>
+                 <Time>
+                   <StartTime>12000</StartTime>
+                   <AllowPassageOfTime>false</AllowPassageOfTime>
+                 </Time>
+               </ServerInitialConditions>
+                <ServerHandlers>
+                  <FlatWorldGenerator generatorString="3;7,220*1,5*3,2;3;,biome_1"/>
+                    <ServerQuitFromTimeUp timeLimitMs="30000"/>
+                    <ServerQuitWhenAnyAgentFinishes/>
+                </ServerHandlers>
+              </ServerSection>
+
+              <AgentSection mode="Creative">
+                <Name>SelfMod</Name>
+                <AgentStart/>
+                <AgentHandlers>
+                  <ObservationFromFullStats/>
+                  <ContinuousMovementCommands turnSpeedDegs="180"/>
+                </AgentHandlers>
+              </AgentSection>
+            </Mission>'''
+
 # Create default Malmo objects:
 
 agent_host = MalmoPython.AgentHost()
@@ -25,7 +56,7 @@ if agent_host.receivedArgument("help"):
     print(agent_host.getUsage())
     exit(0)
 
-my_mission = MalmoPython.MissionSpec()
+my_mission = MalmoPython.MissionSpec(missionXML, True)
 my_mission_record = MalmoPython.MissionRecordSpec()
 
 # Attempt to start a mission:
