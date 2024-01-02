@@ -35,7 +35,10 @@ missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 
               <AgentSection mode="Creative">
                 <Name>SelfMod</Name>
-                <AgentStart/>
+                <AgentStart>
+                  <Placement x="-1065.5" y="346.5" z="0.5" pitch="0.0"/>
+                  <Inventory/>
+                </AgentStart>
                 <AgentHandlers>
                   <ObservationFromFullStats/>
                   <ContinuousMovementCommands turnSpeedDegs="180"/>
@@ -90,6 +93,11 @@ while world_state.is_mission_running:
     print(".", end="")
     time.sleep(0.1)
     world_state = agent_host.getWorldState()
+
+    # print('Observations ----------')
+    # for i in world_state.observations:
+    #     print(i)
+
     for error in world_state.errors:
         print("Error:",error.text)
 
