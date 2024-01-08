@@ -29,12 +29,8 @@ missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
                 <ServerHandlers>
                   <FlatWorldGenerator generatorString="3;7,220*1,5*3,2;3;,biome_1"/>
                     <DrawingDecorator>
-                          <!-- <DrawBlock x="-1065" y="240" z="6" type="quartz_block"/> -->
-                          <!--  <DrawCuboid x1="-1074" y1="227" z1="5" x2="-1057" y2="227" z2="5" type="quartz_block"/> -->
-                           <DrawCuboid x1="-1072" y1="227" z1="5" x2="-1059" y2="227" z2="5" type="quartz_block"/>
-                          <!-- <DrawItem x="-1065" y="227" z="2" type="diamond"/> -->
-                          <!-- <DrawLine x1="-1070" y1="227" z1="6" x2="-1060" y2="227" z2="6" type="quartz_block"/> -->
-
+                          <DrawCuboid x1="-1072" y1="227" z1="5" x2="-1059" y2="227" z2="5" type="quartz_block"/>
+                          <DrawCuboid x1="-1065" y1="227" z1="25" x2="-1059" y2="237" z2="25" type="gold_block"/>
                     </DrawingDecorator>
                     <!-- <ServerQuitFromTimeUp timeLimitMs="30000"/>  -->
                     <!-- <ServerQuitWhenAnyAgentFinishes/> -->
