@@ -46,6 +46,10 @@ missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
                 <AgentHandlers>
                   <ObservationFromFullStats/>
                   <ContinuousMovementCommands turnSpeedDegs="180"/>
+                  <VideoProducer want_depth="false">
+                    <Width>1280</Width>
+                    <Height>960</Height>
+                  </VideoProducer>
                 </AgentHandlers>
               </AgentSection>
             </Mission>'''
