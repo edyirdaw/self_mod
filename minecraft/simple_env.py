@@ -31,7 +31,7 @@ missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
                   <FlatWorldGenerator generatorString="3;7,220*1,5*3,2;3;,biome_1"/>
                     <DrawingDecorator>
                           <DrawCuboid x1="-1072" y1="227" z1="5" x2="-1059" y2="227" z2="5" type="quartz_block"/>
-                          <DrawCuboid x1="-1065" y1="227" z1="25" x2="-1059" y2="237" z2="25" type="gold_block"/>
+                          <DrawCuboid x1="-1065" y1="227" z1="35" x2="-1059" y2="237" z2="35" type="gold_block"/>
                     </DrawingDecorator>
                     <!-- <ServerQuitFromTimeUp timeLimitMs="30000"/>  -->
                     <!-- <ServerQuitWhenAnyAgentFinishes/> -->
@@ -41,7 +41,7 @@ missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
               <AgentSection mode="Creative">
                 <Name>SelfMod</Name>
                 <AgentStart>
-                  <Placement x="-1065.5" y="346.5" z="0.5" pitch="0.0"/>
+                  <Placement x="-1065.5" y="346.5" z="-1.5" pitch="0.0"/>
                   <Inventory/>
                 </AgentStart>
                 <AgentHandlers>
