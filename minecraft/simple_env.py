@@ -114,7 +114,7 @@ class Agent(object):
                 image = Image.frombytes('RGB', (frame.width, frame.height), bytes(frame.pixels))
                 self.iFrame = 0
                 self.rep = self.rep + 1
-                image.save('rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + str(datetime.now()).replace(' ','_').replace(':','-') + '.png')
+                image.save('img/rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + str(datetime.now()).replace(' ','_').replace(':','-') + '.png')
 
 
         return world_state
