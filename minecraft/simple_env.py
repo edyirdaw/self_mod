@@ -5,6 +5,7 @@ import MalmoPython
 import os
 import sys
 import time
+import json
 
 if sys.version_info[0] == 2:
     sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)  # flush print output immediately
@@ -47,8 +48,8 @@ missionXML = '''<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
                   <ObservationFromFullStats/>
                   <ContinuousMovementCommands turnSpeedDegs="180"/>
                   <VideoProducer want_depth="false">
-                    <Width>1280</Width>
-                    <Height>960</Height>
+                    <Width>1344</Width>
+                    <Height>540</Height>
                   </VideoProducer>
                 </AgentHandlers>
               </AgentSection>
@@ -66,6 +67,52 @@ except RuntimeError as e:
 if agent_host.receivedArgument("help"):
     print(agent_host.getUsage())
     exit(0)
+
+save_images = True
+if save_images:
+    from PIL import Image
+
+class Agent(object):
+
+    def __init__(self, agent_host, action_set):
+        self.rep = 0
+        self.agent_host = agent_host
+        self.action_set = action_set
+        self.tolerance = 0.01
+
+    def waitForInitialState(self):
+        '''Before a command has been sent we wait for an observation of the world and a frame.'''
+        # wait for a valid observation
+        world_state = self.agent_host.peekWorldState()
+        while world_state.is_mission_running and all(e.text == '{}' for e in world_state.observations):
+            world_state = self.agent_host.peekWorldState()
+        # wait for a frame to arrive after that
+        num_frames_seen = world_state.number_of_video_frames_since_last_state
+        while world_state.is_mission_running and world_state.number_of_video_frames_since_last_state == num_frames_seen:
+            world_state = self.agent_host.peekWorldState()
+        world_state = self.agent_host.getWorldState()
+
+        if world_state.is_mission_running:
+
+            assert len(world_state.video_frames) > 0, 'No video frames!?'
+
+            obs = json.loads(world_state.observations[-1].text)
+            self.prev_x = obs[u'XPos']
+            self.prev_y = obs[u'YPos']
+            self.prev_z = obs[u'ZPos']
+            self.prev_yaw = obs[u'Yaw']
+            print('Initial position:', self.prev_x, ',', self.prev_y, ',', self.prev_z, 'yaw', self.prev_yaw)
+
+            if save_images:
+                # save the frame, for debugging
+                frame = world_state.video_frames[-1]
+                image = Image.frombytes('RGB', (frame.width, frame.height), bytes(frame.pixels))
+                self.iFrame = 0
+                self.rep = self.rep + 1
+                image.save('rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '.png')
+
+        return world_state
+
 
 my_mission = MalmoPython.MissionSpec(missionXML, True)
 my_mission_record = MalmoPython.MissionRecordSpec()
@@ -101,7 +148,10 @@ print("Mission running ", end=' ')
 # time.sleep(10)
 # agent_host.sendCommand("move 0")
 
-# Loop until mission ends:
+agent = Agent(agent_host,'')
+# world_state = agent.waitForInitialState()
+
+# The main loop. Loop until mission ends:
 while world_state.is_mission_running:
     print(".", end="")
     time.sleep(0.1)
