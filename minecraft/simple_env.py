@@ -6,6 +6,7 @@ import os
 import sys
 import time
 import json
+from datetime import datetime
 
 if sys.version_info[0] == 2:
     sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)  # flush print output immediately
@@ -90,6 +91,10 @@ class Agent(object):
         num_frames_seen = world_state.number_of_video_frames_since_last_state
         while world_state.is_mission_running and world_state.number_of_video_frames_since_last_state == num_frames_seen:
             world_state = self.agent_host.peekWorldState()
+
+        time.sleep(15)
+        print('Started observing .................')
+
         world_state = self.agent_host.getWorldState()
 
         if world_state.is_mission_running:
@@ -109,7 +114,8 @@ class Agent(object):
                 image = Image.frombytes('RGB', (frame.width, frame.height), bytes(frame.pixels))
                 self.iFrame = 0
                 self.rep = self.rep + 1
-                image.save('rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '.png')
+                image.save('rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + str(datetime.now()).replace(' ','_').replace(':','-') + '.png')
+
 
         return world_state
 
@@ -149,7 +155,7 @@ print("Mission running ", end=' ')
 # agent_host.sendCommand("move 0")
 
 agent = Agent(agent_host,'')
-# world_state = agent.waitForInitialState()
+world_state = agent.waitForInitialState()
 
 # The main loop. Loop until mission ends:
 while world_state.is_mission_running:
