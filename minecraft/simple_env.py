@@ -83,6 +83,7 @@ class Agent(object):
         self.date_time = str(datetime.now()).replace(' ','_').replace(':','-')
         self.init_sleep = 15
         self.next_state_sleep = 2
+        self.action_count = 0
 
     def waitForInitialState(self):
         '''Before a command has been sent we wait for an observation of the world and a frame.'''
@@ -190,8 +191,11 @@ class Agent(object):
     def act( self ):
         '''Take an action'''
 
-        # self.agent_host.sendCommand('move 1')
-        self.agent_host.sendCommand('strafe 1')
+        self.agent_host.sendCommand('move 0.1')
+        # self.agent_host.sendCommand('move 0')
+        # self.agent_host.sendCommand('strafe 1')
+        self.action_count += 1
+        print('self.action_count =', self.action_count)
 
 my_mission = MalmoPython.MissionSpec(missionXML, True)
 my_mission_record = MalmoPython.MissionRecordSpec()
