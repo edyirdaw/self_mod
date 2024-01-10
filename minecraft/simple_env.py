@@ -188,10 +188,13 @@ class Agent(object):
 
         return world_state
 
-    def act( self ):
+    def act(self):
         '''Take an action'''
-
-        self.agent_host.sendCommand('move 0.1')
+        if self.action_count % 2 == 0:
+            self.agent_host.sendCommand('move 0.1')
+        else:
+            self.agent_host.sendCommand('strafe 0.1')
+        # self.agent_host.sendCommand('move 0.1')
         # self.agent_host.sendCommand('move 0')
         # self.agent_host.sendCommand('strafe 1')
         self.action_count += 1
@@ -238,6 +241,7 @@ world_state = agent.waitForInitialState()
 while world_state.is_mission_running:
     print(".", end="")
     # time.sleep(0.1)
+
     agent.act()
     world_state = agent.waitForNextState()
 
