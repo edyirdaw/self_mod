@@ -96,7 +96,7 @@ class Agent(object):
             world_state = self.agent_host.peekWorldState()
 
         time.sleep(self.init_sleep)
-        print('Started observing .................')
+        print('\nStarted observing .................')
 
         world_state = self.agent_host.getWorldState()
 
@@ -190,7 +190,7 @@ class Agent(object):
     def act( self ):
         '''Take an action'''
 
-        self.agent_host.sendCommand('move 1')
+        # self.agent_host.sendCommand('move 1')
         self.agent_host.sendCommand('strafe 1')
 
 my_mission = MalmoPython.MissionSpec(missionXML, True)
@@ -235,7 +235,7 @@ while world_state.is_mission_running:
     print(".", end="")
     # time.sleep(0.1)
     agent.act()
-    world_state = agent.waitForNextState().getWorldState()
+    world_state = agent.waitForNextState()
 
     # print('Observations ----------')
     # for i in world_state.observations:
