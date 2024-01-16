@@ -2,6 +2,8 @@ from __future__ import print_function
 
 from builtins import range
 import MalmoPython
+import numpy as np
+import cv2
 import os
 import sys
 import time
@@ -160,6 +162,11 @@ class Agent(object):
                 image = Image.frombytes('RGB', (frame.width, frame.height), bytes(frame.pixels))
                 self.iFrame = self.iFrame + 1
                 image.save('img/' + self.date_time + '/' + 'rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png')
+                (im_width, im_height) = image.size
+                image_np = np.array(image.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
+                opencvImage = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',opencvImage)
+
 
         if world_state.is_mission_running:
             assert len(world_state.video_frames) > 0, 'No video frames!?'
