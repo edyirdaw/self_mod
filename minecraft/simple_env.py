@@ -167,8 +167,8 @@ class Agent(object):
                 opencvImage = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
                 (blurred, edges) = self.canny_edge_detection(image_np)
                 cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',opencvImage)
-                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_edges_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',edges)
-                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_blurred_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',blurred)
+                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_edges.png',edges)
+                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_blurred.png',blurred)
 
 
         if world_state.is_mission_running:
