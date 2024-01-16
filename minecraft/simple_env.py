@@ -161,11 +161,14 @@ class Agent(object):
                 frame = world_state.video_frames[-1]
                 image = Image.frombytes('RGB', (frame.width, frame.height), bytes(frame.pixels))
                 self.iFrame = self.iFrame + 1
-                image.save('img/' + self.date_time + '/' + 'rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png')
+                # image.save('img/' + self.date_time + '/' + 'rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png')
                 (im_width, im_height) = image.size
                 image_np = np.array(image.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
                 opencvImage = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
+                (blurred, edges) = self.canny_edge_detection(image_np)
                 cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',opencvImage)
+                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_edges_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',edges)
+                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_blurred_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',blurred)
 
 
         if world_state.is_mission_running:
@@ -194,6 +197,18 @@ class Agent(object):
             self.prev_yaw = self.curr_yaw
 
         return world_state
+
+    def canny_edge_detection(self,frame):
+        # Convert the frame to grayscale for edge detection
+        gray = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+
+        # Apply Gaussian blur to reduce noise and smoothen edges
+        blurred = cv2.GaussianBlur(src=gray, ksize=(3, 5), sigmaX=0.5)
+
+        # Perform Canny edge detection
+        edges = cv2.Canny(blurred, 70, 135)
+
+        return blurred, edges
 
     def act(self):
         '''Take an action'''
