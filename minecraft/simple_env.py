@@ -169,6 +169,7 @@ class Agent(object):
                 cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',opencvImage)
                 cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_edges.png',edges)
                 cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_blurred.png',blurred)
+                self.find_contours(edges)
 
 
         if world_state.is_mission_running:
@@ -209,6 +210,22 @@ class Agent(object):
         edges = cv2.Canny(blurred, 70, 135)
 
         return blurred, edges
+
+    def find_contours(self,edges):
+
+        # Find contours, draw on image and save
+        contours, hierarchy = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+        cv2.drawContours(edges, contours, -1, (0, 0, 255), 3)
+
+        # Show user what we found
+        i = 0
+        for cnt in contours:
+            x, y, w, h = cv2.boundingRect(cnt)
+            print('Contour {}: x={}, y={}, w={}, h={}'.format(i, x, y, w, h))
+            i = i + 1
+
+        # Save the result
+        cv2.imwrite('result.png', edges)
 
     def act(self):
         '''Take an action'''
