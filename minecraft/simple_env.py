@@ -166,9 +166,9 @@ class Agent(object):
                 image_np = np.array(image.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
                 opencvImage = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
                 (blurred, edges) = self.canny_edge_detection(image_np)
-                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '.png',opencvImage)
-                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_edges.png',edges)
-                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_blurred.png',blurred)
+                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_1.png',opencvImage)
+                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_2_blurred.png',blurred)
+                cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_3_edges.png',edges)
                 self.find_contours(edges)
 
 
@@ -225,7 +225,7 @@ class Agent(object):
             i = i + 1
 
         # Save the result
-        cv2.imwrite('result.png', edges)
+        cv2.imwrite('img/' + self.date_time + '/' + 'z_rep_' + str(self.rep).zfill(3) + '_saved_frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_4_contours.png', edges)
 
     def act(self):
         '''Take an action'''
@@ -238,6 +238,7 @@ class Agent(object):
         # self.agent_host.sendCommand('strafe 1')
         self.action_count += 1
         print('self.action_count =', self.action_count)
+
 
 my_mission = MalmoPython.MissionSpec(missionXML, True)
 my_mission_record = MalmoPython.MissionRecordSpec()
