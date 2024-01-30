@@ -231,6 +231,11 @@ class Agent(object):
 
     def detect_objects(self, edges):
 
+        # print(type(edges))
+        # print(edges.shape)
+        # np.savetxt('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_5_values.txt', np.round(edges,2),fmt="%.2f")
+
+
         pass
 
     def act(self):
