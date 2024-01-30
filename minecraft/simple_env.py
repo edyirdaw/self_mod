@@ -169,7 +169,8 @@ class Agent(object):
                 cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_1.png',opencvImage)
                 cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_2_blurred.png',blurred)
                 cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_3_edges.png',edges)
-                self.find_contours(edges)
+                # self.find_contours(edges)
+                self.detect_objects(edges)
 
 
         if world_state.is_mission_running:
@@ -211,6 +212,7 @@ class Agent(object):
 
         return blurred, edges
 
+    # Doesn't work well
     def find_contours(self,edges):
 
         # Find contours, draw on image and save
@@ -226,6 +228,10 @@ class Agent(object):
 
         # Save the result
         cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_4_contours.png', edges)
+
+    def detect_objects(self, edges):
+
+        pass
 
     def act(self):
         '''Take an action'''
