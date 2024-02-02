@@ -236,9 +236,25 @@ class Agent(object):
         # np.savetxt('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_5_values.txt', np.round(edges,2),fmt="%.2f")
 
         hsv_img = cv2.cvtColor(image_np, cv2.COLOR_BGR2HSV)
+        # print(type(hsv_img))
+        # print(hsv_img.shape)
         cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_6_hsv_img.png',hsv_img)
 
+        # Write hsv values to text file for inspection
+        # self.three_d_array_to_text(hsv_img,'_7_hsv_values')
+
         pass
+
+    def three_d_array_to_text(self,arr,file_name):
+        text = ''
+        for row in arr:
+            for e in row:
+                text += '[{}, {}, {}] '.format(round(e[0],2), round(e[1],2), round(e[2],2))
+            text += '\n'
+        # Write the string to a file.
+        with open('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + file_name +'.txt', 'w') as f:
+            f.write(text)
+
 
     def act(self):
         '''Take an action'''
