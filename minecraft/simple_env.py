@@ -165,12 +165,12 @@ class Agent(object):
                 (im_width, im_height) = image.size
                 image_np = np.array(image.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
                 opencvImage = cv2.cvtColor(image_np, cv2.COLOR_RGB2BGR)
-                (blurred, edges) = self.canny_edge_detection(image_np)
+                # (blurred, edges) = self.canny_edge_detection(image_np)
                 cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_1.png',opencvImage)
-                cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_2_blurred.png',blurred)
-                cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_3_edges.png',edges)
+                # cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_2_blurred.png',blurred)
+                # cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_3_edges.png',edges)
                 # self.find_contours(edges)
-                self.detect_objects(edges)
+                self.detect_objects(image_np)
 
 
         if world_state.is_mission_running:
@@ -229,12 +229,14 @@ class Agent(object):
         # Save the result
         cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_4_contours.png', edges)
 
-    def detect_objects(self, edges):
+    def detect_objects(self, image_np):
 
         # print(type(edges))
         # print(edges.shape)
         # np.savetxt('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_5_values.txt', np.round(edges,2),fmt="%.2f")
 
+        hsv_img = cv2.cvtColor(image_np, cv2.COLOR_BGR2HSV)
+        cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_6_hsv_img.png',hsv_img)
 
         pass
 
