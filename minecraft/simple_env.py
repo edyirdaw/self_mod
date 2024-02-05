@@ -241,16 +241,20 @@ class Agent(object):
         cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_6_hsv_img.png',hsv_img)
 
         # Write hsv values to text file for inspection
-        # self.three_d_array_to_text(hsv_img,'_7_hsv_values')
+        self.three_d_array_to_text(hsv_img,'_7_hsv_values')
 
         pass
 
     def three_d_array_to_text(self,arr,file_name):
         text = ''
+        i = j = 0
         for row in arr:
+            j = 0
             for e in row:
-                text += '[{}, {}, {}] '.format(round(e[0],2), round(e[1],2), round(e[2],2))
+                text += '('+str(i).zfill(4)+','+str(j).zfill(4)+')'+'[{}, {}, {}] '.format(round(e[0],2), round(e[1],2), round(e[2],2))
+                j+=1
             text += '\n'
+            i+=1
         # Write the string to a file.
         with open('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + file_name +'.txt', 'w') as f:
             f.write(text)
