@@ -86,7 +86,7 @@ class Agent(object):
         self.init_sleep = 15
         self.next_state_sleep = 2
         self.action_count = 0
-        self.lower_upper = {'gold_1':[np.array([85,110,110]),np.array([95, 180, 130])]}
+        self.lower_upper = {'gold_1':[np.array([85, 110, 110]),np.array([95, 180, 130])], 'quartz_1':[np.array([165, 25, 115]),np.array([185, 50, 180])]}
 
     def waitForInitialState(self):
         '''Before a command has been sent we wait for an observation of the world and a frame.'''
@@ -242,8 +242,9 @@ class Agent(object):
         cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_6_hsv_img.png',hsv_img)
 
         # Write hsv values to text file for inspection
-        # self.three_d_array_to_text(hsv_img,'_7_hsv_values')
+        self.three_d_array_to_text(hsv_img,'_7_hsv_values')
         self.threshold(hsv_img,'gold_1','_8_gold_1')
+        self.threshold(hsv_img,'quartz_1','_8_quartz_1')
 
 
         pass
@@ -277,7 +278,8 @@ class Agent(object):
         if self.action_count % 2 == 0:
             self.agent_host.sendCommand('move 0.1')
         else:
-            self.agent_host.sendCommand('strafe 0.1')
+            # self.agent_host.sendCommand('strafe 0.1')
+            pass
         # self.agent_host.sendCommand('move 0.1')
         # self.agent_host.sendCommand('move 0')
         # self.agent_host.sendCommand('strafe 1')
