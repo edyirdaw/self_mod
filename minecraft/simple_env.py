@@ -242,7 +242,7 @@ class Agent(object):
         cv2.imwrite('img/' + self.date_time + '/' + 'frame_' + str(self.iFrame).zfill(4) + '_' + self.date_time + '_6_hsv_img.png',hsv_img)
 
         # Write hsv values to text file for inspection
-        self.three_d_array_to_text(hsv_img,'_7_hsv_values')
+        # self.three_d_array_to_text(hsv_img,'_7_hsv_values')
         self.threshold(hsv_img,'gold_1','_8_gold_1')
         self.threshold(hsv_img,'quartz_1','_8_quartz_1')
 
@@ -278,8 +278,7 @@ class Agent(object):
         if self.action_count % 2 == 0:
             self.agent_host.sendCommand('move 0.1')
         else:
-            # self.agent_host.sendCommand('strafe 0.1')
-            pass
+            self.agent_host.sendCommand('strafe 0.1')
         # self.agent_host.sendCommand('move 0.1')
         # self.agent_host.sendCommand('move 0')
         # self.agent_host.sendCommand('strafe 1')
